@@ -23,6 +23,7 @@ app.use(
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
 app.locals.siteName = 'ROUX Meetups';
@@ -41,6 +42,8 @@ app.use(express.static(path.join(__dirname, './static')));
 
 app.use('/', routes({ feedbackService, speakersService }));
 app.use((req, res, next) => next(createError(404, 'File not found')));
+
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
   const status = err.status || 500;
@@ -50,5 +53,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`Express server listening on port ${port}!`);
 });
